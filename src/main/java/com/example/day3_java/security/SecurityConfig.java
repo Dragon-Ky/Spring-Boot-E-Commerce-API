@@ -28,11 +28,15 @@ public class SecurityConfig {
         // STATELESS: không tạo session, chỉ dùng JWT
 
         httpSecurity.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**","/v3/api-docs/**").permitAll()
-                // mở auth + swagger
+                .requestMatchers(
+                        "/api/auth/**",
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html"
+                ).permitAll()
                 .anyRequest().authenticated()
-                // còn lại phải có JWT
         );
+
         httpSecurity.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         // Filter JWT chạy trước filter login mặc định
 
