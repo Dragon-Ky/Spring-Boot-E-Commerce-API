@@ -18,7 +18,7 @@ public class ProductController {
 
     public ProductController(ProductService productService){this.productService = productService;}
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hole('ADMIN')\")asR
     @PostMapping
     public ApiResponse<ProductResponse> create(@Valid @RequestBody ProductCreateRequest request){
         return ApiResponse.oke(productService.create(request));
