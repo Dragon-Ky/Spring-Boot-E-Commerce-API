@@ -11,5 +11,5 @@ public interface UserRepository extends JpaRepository<AppUser,Long> {
 
     boolean existsByUsername(String username);
 
-    boolean exitstByRole(Role role);
+    boolean existsByRole(Role role);
 }
