@@ -30,6 +30,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException{
         String authHeader = request.getHeader("Authorization");
+
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        String path = request.getServletPath();
+        if (path.startsWith("/swagger-ui") || path.startsWith("/v3/api-docs") || path.startsWith("/api/auth")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         // Header chuẩn: Authorization: Bearer <token>
         if (authHeader == null || !authHeader.startsWith("Bearer")){
             filterChain.doFilter(request,response);

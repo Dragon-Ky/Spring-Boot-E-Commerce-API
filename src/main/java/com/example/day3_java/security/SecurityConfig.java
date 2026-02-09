@@ -43,8 +43,10 @@ public class SecurityConfig {
                         "/swagger-ui/**",
                         "/swagger-ui.html"
                 ).permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()
         );
+
 
 
         httpSecurity.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
@@ -68,20 +70,24 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
+        // Nếu bạn không dùng cookie/session thì không cần credentials
+        config.setAllowCredentials(false);
+
         config.setAllowedOrigins(List.of(
+                "https://spring-boot-e-commerce-api-production.up.railway.app",
                 "http://localhost:8080",
-                "http://localhost:3000",
-                "https://spring-boot-e-commerce-api-production.up.railway.app"
+                "http://localhost:3000"
         ));
 
         config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true);
+
+        // Khuyên set rõ header (Swagger hay dùng Authorization)
+        config.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "Origin", "X-Requested-With"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
-
         return source;
     }
+
 
 }
