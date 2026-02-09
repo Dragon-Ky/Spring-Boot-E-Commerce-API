@@ -29,6 +29,9 @@ public class SecurityConfig {
 
         httpSecurity.authorizeHttpRequests(auth -> auth
                 .requestMatchers(
+                        "/",
+                        "/error",
+                        "/actuator/health",
                         "/api/auth/**",
                         "/v3/api-docs/**",
                         "/swagger-ui/**",
@@ -36,6 +39,7 @@ public class SecurityConfig {
                 ).permitAll()
                 .anyRequest().authenticated()
         );
+
 
         httpSecurity.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         // Filter JWT chạy trước filter login mặc định
