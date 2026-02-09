@@ -23,15 +23,16 @@ public class JwtService {
         this.expMs = props.getExpirationMs();
     }
 
-    public String generateToken(String username,String role){
+    public String generateToken(String username, String role) {
         return Jwts.builder()
                 .setSubject(username)
-                .claim("role",role)
+                .claim("role", role)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis()+expMs))
-                .signWith(key, SignatureAlgorithm.ES256)
+                .setExpiration(new Date(System.currentTimeMillis() + expMs))
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
+
     public Jws<Claims> parseToken(String token){
         return Jwts.parserBuilder()
                 .setSigningKey(key)
