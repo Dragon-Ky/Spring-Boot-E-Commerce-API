@@ -20,7 +20,7 @@ public class DataInitializer {
         if (!userRepository.exitstByRole(Role.ADMIN)){
             AppUser admin = new AppUser();
             admin.setUsername("Admin");
-            admin.setPassword("123456");
+            admin.setPassword(passwordEncoder.encode("123456"));
             admin.setRole(Role.ADMIN);
 
             userRepository.save(admin);
