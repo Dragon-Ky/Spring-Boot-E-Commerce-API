@@ -22,4 +22,6 @@ public class AuthResponse {
     public String getRole() {
         return role;
     }
+
+
 }
