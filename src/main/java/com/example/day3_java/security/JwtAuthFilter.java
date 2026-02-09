@@ -43,7 +43,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
 
         // Header chuẩn: Authorization: Bearer <token>
-        if (authHeader == null || !authHeader.startsWith("Bearer")){
+        if (authHeader == null || !authHeader.startsWith("Bearer ")){
             filterChain.doFilter(request,response);
             return;
         }
@@ -60,7 +60,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     var authorities = List.of(new SimpleGrantedAuthority("ROLE_"+role));
 
                     var auth = new UsernamePasswordAuthenticationToken(
-                            username,null,authorities
+                            user,null,authorities
                     );
                     SecurityContextHolder.getContext().setAuthentication(auth);
                 }
